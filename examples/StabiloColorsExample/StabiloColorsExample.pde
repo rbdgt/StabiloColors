@@ -6,13 +6,14 @@ int[] colors = {
 }; // array of colorcodes
 
 void setup() {
-  size(400, 250);
+  size(400, 360);
   background(255);
 }
 
 void draw() {
   drawLinesS68();
   drawLinesS88();
+  transparencyDemo();
   getColorNames();
   getColorCodes();
   noLoop();
@@ -28,15 +29,27 @@ void drawLinesS68() {
   }
 }
 
-// Not all colors are available for this pen, this is reflected by messages in the console...
+// Not all colors are available for this pen, this is reflected by messages in the console and white gaps in the sketch...
 void drawLinesS88() {
   strokeWeight(2);
   int d = 40;
   for (int i : colors) { // iterate over colorcodes 
-    stabilo.getColorName(i);
     stroke(stabilo.s88(i)); // pass colorcode to s88-function
     line(0+d, 130, 0+d, 230);
     d+=(width-80)/40;
+  }
+}
+
+void transparencyDemo() {
+  strokeWeight(5);
+  int d = 40;
+  int iteration = 0; 
+  for (int i : colors) { // iterate over colorcodes 
+    int alpha = (255/40)*iteration;
+    stroke(stabilo.s68("crimson_red", alpha)); // pass colorcode AND alphavalue
+    line(0+d, 240, 0+d, 340);
+    d+=(width-80)/40;
+    iteration++;
   }
 }
 
